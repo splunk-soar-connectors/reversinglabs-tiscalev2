@@ -142,6 +142,10 @@
                     "column_order": 1
                 },
                 {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "status",
@@ -215,6 +219,10 @@
                     "column_order": 1
                 },
                 {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "status",
@@ -269,6 +277,10 @@
                     "contains": [],
                     "column_name": "vault_id",
                     "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.status",
