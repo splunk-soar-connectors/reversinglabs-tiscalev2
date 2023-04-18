@@ -67,7 +67,7 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
+            "verbose": "Validate the asset configuration for connectivity using supplied configuration.",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -77,8 +77,8 @@
         {
             "action": "detonate file and get report",
             "identifier": "detonate_file_and_get_report",
-            "description": "Run the file in the sandbox and retrieve the analysis results",
-            "verbose": "",
+            "description": "Detonate file and return report",
+            "verbose": "Detonates file and returns report.",
             "type": "generic",
             "read_only": true,
             "parameters": {
@@ -173,7 +173,7 @@
             "action": "get report",
             "identifier": "get_report",
             "description": "Query for results of an already completed detonation",
-            "verbose": "",
+            "verbose": "Querys for results of an already completed detonation.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -243,7 +243,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "detonate",
+            "action": "detonate file",
             "identifier": "detonate",
             "description": "Detonate file",
             "verbose": "Detonates file and returns task id (url to get the report from).",
