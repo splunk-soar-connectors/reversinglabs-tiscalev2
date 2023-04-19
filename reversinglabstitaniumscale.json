@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) ReversingLabs, 2023",
-    "app_version": "3.0.0",
+    "app_version": "1.0.0",
     "utctime_updated": "2023-04-13T12:48:58.213954Z",
     "package_name": "phantom_reversinglabstitaniumscale",
     "main_module": "reversinglabstitaniumscale_connector.py",
