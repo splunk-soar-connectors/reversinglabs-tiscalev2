@@ -47,7 +47,7 @@ phantom.requests.delete = new_delete
 
 
 class ReversinglabsTitaniumScaleConnector(BaseConnector):
-    USER_AGENT = "ReversingLabs TitaniumScale v1.0.0"
+    USER_AGENT = "ReversingLabs Splunk SOAR TitaniumScale v3.0.0"
 
     # The actions supported by this connector
     ACTION_ID_TEST_CONNECTIVITY = "test_connectivity"
@@ -77,8 +77,12 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         config = self.get_config()
         self.tiscale_url = config["url"]
         self.tiscale_token = config["token"]
+        self.wait_time = config["wait_time"]
+        self.retries = config["retries"]
 
-        self.tiscale = TitaniumScale(host=self.tiscale_url, token=self.tiscale_token)
+        self.tiscale = TitaniumScale(host=self.tiscale_url, token=self.tiscale_token,
+                                     wait_time_seconds=self.wait_time, retries=self.retries,
+                                     user_agent=self.USER_AGENT)
 
         return phantom.APP_SUCCESS
 

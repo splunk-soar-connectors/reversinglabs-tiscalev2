@@ -16,7 +16,7 @@
         }
     ],
     "license": "Copyright (c) ReversingLabs, 2023",
-    "app_version": "1.0.0",
+    "app_version": "3.0.0",
     "utctime_updated": "2023-04-13T12:48:58.213954Z",
     "package_name": "phantom_reversinglabstitaniumscale",
     "main_module": "reversinglabstitaniumscale_connector.py",
@@ -46,7 +46,7 @@
             "data_type": "string",
             "required": false,
             "value_list": [],
-            "default": "",
+            "default": 2,
             "order": 2,
             "name": "wait_time",
             "id": 2
@@ -56,7 +56,7 @@
             "data_type": "numeric",
             "required": false,
             "value_list": [],
-            "default": "",
+            "default": 10,
             "order": 3,
             "name": "retries",
             "id": 3
