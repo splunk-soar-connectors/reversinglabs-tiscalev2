@@ -1,10 +1,25 @@
+# File: reversinglabs_tiscalev2_views.py
+#
+# Copyright (c) ReversingLabs, 2023
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+
 def detonate_file(provides, all_app_runs, context):
     for summary, action_results in all_app_runs:
         for result in action_results:
             context['data'] = result.get_data()[0]
             context['param'] = result.get_param()
 
-    return 'views/reversinglabs_detonate_file.html'
+    return 'views/reversinglabs_tiscalev2_detonate_file.html'
 
 
 def detonate_and_get_report(provides, all_app_runs, context):
@@ -14,7 +29,7 @@ def detonate_and_get_report(provides, all_app_runs, context):
     #         context['data'] = result.get_data()[0].get('tc_report')
     #         context['param'] = result.get_param()
 
-    # return 'views/reversinglabs_report.html'
+    # return 'views/reversinglabs_tiscalev2_report.html'
 
 
 def get_report(provides, all_app_runs, context):
@@ -27,7 +42,7 @@ def get_report(provides, all_app_runs, context):
             ).upper()
             context["classification_color"] = color_code_classification(context["classification"])
 
-    return 'views/reversinglabs_report.html'
+    return 'views/reversinglabs_tiscalev2_report.html'
 
 
 def color_code_classification(classification):

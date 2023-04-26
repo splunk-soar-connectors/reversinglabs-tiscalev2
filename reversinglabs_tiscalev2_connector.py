@@ -1,11 +1,25 @@
-#!/usr/bin/python
+# File: reversinglabs_tiscalev2_connector.py
+#
+# Copyright (c) ReversingLabs, 2023
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# !/usr/bin/python
 # -*- coding: utf-8 -*-
 # -----------------------------------------
 # Phantom sample App Connector python file
 # -----------------------------------------
 
 # Python 3 Compatibility imports
-from __future__ import print_function, unicode_literals
 
 import json
 
@@ -51,7 +65,7 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
     # The actions supported by this connector
     ACTION_ID_TEST_CONNECTIVITY = "test_connectivity"
-    ACTION_ID_DETONATE_FILE = "detonate"
+    ACTION_ID_DETONATE_FILE = "detonate_file"
     ACTION_ID_DETONATE_FILE_AND_GET_REPORT = "detonate_file_and_get_report"
     ACTION_ID_GET_REPORT = "get_report"
 
@@ -77,8 +91,8 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         config = self.get_config()
         self.tiscale_url = config["url"]
         self.tiscale_token = config["token"]
-        self.wait_time = config["wait_time"]
-        self.retries = config["retries"]
+        self.wait_time = config.get("wait_time", 2)
+        self.retries = config.get("retries", 10)
 
         self.tiscale = TitaniumScale(host=self.tiscale_url, token=self.tiscale_token,
                                      wait_time_seconds=self.wait_time, retries=self.retries,
@@ -119,7 +133,7 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         if not file:
             raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
 
-        response = self.tiscale.upload_sample_and_get_results(file_path=file["path"], full_report=param.get("full_report"))
+        response = self.tiscale.upload_sample_and_get_results(file_path=file["path"], full_report=param.get("full_report", False))
 
         self.debug_print("Executed", self.get_action_identifier())
 
@@ -148,7 +162,7 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
     def _handle_get_report(self, action_result, param):
         self.debug_print("Action handler", self.get_action_identifier())
 
-        response = self.tiscale.get_results(task_url=param.get("task_url"), full_report=param.get("full_report"))
+        response = self.tiscale.get_results(task_url=param.get("task_url"), full_report=param.get("full_report", False))
 
         print(response.json())
 
