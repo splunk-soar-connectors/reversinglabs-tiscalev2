@@ -20,7 +20,6 @@
 # -----------------------------------------
 
 # Python 3 Compatibility imports
-
 import json
 
 # Phantom App imports
@@ -180,6 +179,7 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
 def main():
     import argparse
+    import sys
 
     argparser = argparse.ArgumentParser()
     args = argparser.parse_args()
@@ -191,7 +191,7 @@ def main():
         connector.print_progress_message = True
 
         connector._handle_action(json.dumps(in_json), None)
-    exit(0)
+    sys.exit(0)
 
 
 if __name__ == '__main__':
