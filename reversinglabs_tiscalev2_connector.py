@@ -61,6 +61,9 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
     ACTION_ID_DETONATE_FILE = "detonate_file"
     ACTION_ID_DETONATE_FILE_AND_GET_REPORT = "detonate_file_and_get_report"
     ACTION_ID_GET_REPORT = "get_report"
+    ACTION_ID_LIST_TASKS = "get_task_list"
+    ACTION_ID_DELETE_TASKS = "delete_tasks"
+    ACTION_ID_GET_YARA = "get_yara_id"
 
     def __init__(self):
         # Call the BaseConnectors init first
@@ -71,6 +74,9 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
             self.ACTION_ID_DETONATE_FILE: self._handle_detonate_file,
             self.ACTION_ID_DETONATE_FILE_AND_GET_REPORT: self._handle_detonate_file_and_get_report,
             self.ACTION_ID_GET_REPORT: self._handle_get_report,
+            self.ACTION_ID_LIST_TASKS: self._handle_get_task_list,
+            self.ACTION_ID_DELETE_TASKS: self._handle_delete_tasks,
+            self.ACTION_ID_GET_YARA: self._handle_get_yara,
         }
 
         self._state = None
@@ -169,6 +175,28 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         self.tiscale.test_connection()
 
         self.save_progress("Test Connectivity Passed")
+
+    def _handle_get_task_list(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        response = self.tiscale.list_processing_tasks(
+            age=param.get("age"),
+            custom_token=param.get("custom_token"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
+        action_result.add_data(response.json())
+
+    def _handle_delete_tasks(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        self.tiscale.delete_multiple_tasks(
+            age=param.get("age"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
+
+    def _handle_get_yara(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        response = self.tiscale.get_yara_id()
+        action_result.add_data(response.json())
+        self.debug_print("Executed", self.get_action_identifier())
 
 
 def main():
