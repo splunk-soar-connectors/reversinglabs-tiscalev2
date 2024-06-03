@@ -45,6 +45,18 @@ def get_report(provides, all_app_runs, context):
     return 'views/reversinglabs_tiscalev2_report.html'
 
 
+def get_task_list(provides, all_app_runs, context):
+    for summary, action_results in all_app_runs:
+        for result in action_results:
+            if len(result.get_data()) == 0:
+                context['data'] = []
+            else:
+                context['data'] = result.get_data()[0]
+            context['param'] = result.get_param()
+
+    return 'views/reversinglabs_tiscalev2_get_task_list.html'
+
+
 def color_code_classification(classification):
     color = ""
     classification = classification.upper()
