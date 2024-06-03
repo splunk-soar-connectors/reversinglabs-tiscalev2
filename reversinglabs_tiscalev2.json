@@ -352,6 +352,25 @@
                     "primary": true,
                     "contains": ["vault id"],
                     "order": 0
+                },
+                "custom_token": {
+                    "description": "Custom string to filter processing tasks, if there are any files that were uploaded with that custom string in the x-TiScale-Token header",
+                    "data_type": "string",
+                    "order": 1,
+                    "required": false,
+                    "primary": false
+                },
+                "user_data": {
+                    "description": "Additional JSON encoded payload. Used in parts of the processing pipeline.",
+                    "data_type": "string",
+                    "order": 2,
+                    "required": false
+                },
+                "custom_data": {
+                    "description": "Any user defined JSON encoded payload. This data will be included in the analysis report.",
+                    "data_type": "string",
+                    "order": 3,
+                    "required": false
                 }
             },
             "output": [
@@ -363,18 +382,36 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data",
-                    "data_type": "string"
+                    "data_path": "action_result.parameter.custom_token",
+                    "data_type": "string",
+                    "column_name": "Custom token",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.user_data",
+                    "data_type": "string",
+                    "column_name": "User data",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.parameter.custom_data",
+                    "data_type": "string",
+                    "column_name": "Custom data",
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "Status",
-                    "column_order": 1,
+                    "column_order": 4,
                     "example_values": [
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",

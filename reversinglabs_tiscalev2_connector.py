@@ -154,7 +154,12 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         if not file:
             raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
 
-        response = self.tiscale.upload_sample_from_path(file_path=file["path"])
+        response = self.tiscale.upload_sample_from_path(
+            file_path=file["path"],
+            custom_token=param.get("custom_token"),
+            user_data=param.get("user_data"),
+            custom_data=param.get("custom_data"),
+        )
 
         print(response.json())
 
