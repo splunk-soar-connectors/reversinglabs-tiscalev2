@@ -165,7 +165,7 @@
             "action": "get report",
             "identifier": "get_report",
             "description": "Query for results of an already completed detonation",
-            "verbose": "Querys for results of an already completed detonation.",
+            "verbose": "Queries for results of an already completed detonation.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -435,7 +435,7 @@
             "action": "get yara id",
             "identifier": "get_yara_id",
             "description": "Retrieve an identifier for the current set of YARA rules on the Worker instance",
-            "verbose": "If there are any changes to the set of YARA rules, the identifier will change. Therefore this endpoint can be used to monitor changes to YARA rules by comparing the reponses retrieved over multiple time intervals.",
+            "verbose": "If there are any changes to the set of YARA rules, the identifier will change. Therefore this endpoint can be used to monitor changes to YARA rules by comparing the responses retrieved over multiple time intervals.",
             "type": "generic",
             "read_only": false,
             "parameters": {},
