@@ -26,7 +26,7 @@
     "utctime_updated": "2023-04-13T12:48:58.213954Z",
     "package_name": "phantom_reversinglabs_tiscalev2",
     "main_module": "reversinglabs_tiscalev2_connector.py",
-    "min_phantom_version": "6.2.1",
+    "min_phantom_version": "6.1.1",
     "app_wizard_version": "1.0.0",
     "fips_compliant": false,
     "configuration": {
