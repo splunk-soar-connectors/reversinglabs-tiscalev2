@@ -78,8 +78,8 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
             self.ACTION_ID_GET_REPORT: self._handle_get_report,
             self.ACTION_ID_GET_REPORT_BY_ID: self._handle_get_report_by_id,
             self.ACTION_ID_GET_TASK_LIST: self._handle_get_task_list,
-            self.ACTION_ID_DELETE_PROCESSING_TASK: self._handle_delete_task,
-            self.ACTION_ID_DELETE_PROCESSING_TASKS: self._handle_delete_tasks,
+            self.ACTION_ID_DELETE_PROCESSING_TASK: self._handle_delete_processing_task,
+            self.ACTION_ID_DELETE_PROCESSING_TASKS: self._handle_delete_processing_tasks,
             self.ACTION_ID_GET_YARA_ID: self._handle_get_yara_id,
         }
 
@@ -204,14 +204,14 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         self.debug_print("Executed", self.get_action_identifier())
         action_result.add_data(response.json())
 
-    def _handle_delete_task(self, action_result, param):
+    def _handle_delete_processing_task(self, action_result, param):
         self.debug_print("Action handler", self.get_action_identifier())
         self.tiscale.delete_processing_task(
             task_id=param.get("task_id"),
         )
         self.debug_print("Executed", self.get_action_identifier())
 
-    def _handle_delete_tasks(self, action_result, param):
+    def _handle_delete_processing_tasks(self, action_result, param):
         self.debug_print("Action handler", self.get_action_identifier())
         self.tiscale.delete_multiple_tasks(
             age=param.get("age"),
