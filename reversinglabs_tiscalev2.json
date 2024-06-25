@@ -378,7 +378,7 @@
                     "data_path": "action_result.parameter.vault_id",
                     "data_type": "string",
                     "column_name": "Vault ID",
-                    "contains": "vault id",
+                    "contains": ["vault id"],
                     "column_order": 0
                 },
                 {
