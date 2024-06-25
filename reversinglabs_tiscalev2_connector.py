@@ -54,13 +54,18 @@ phantom.requests.delete = new_delete
 
 
 class ReversinglabsTitaniumScaleConnector(BaseConnector):
-    USER_AGENT = "ReversingLabs Splunk SOAR TitaniumScale v1.0.0"
+    USER_AGENT = "ReversingLabs Splunk SOAR TitaniumScale v1.1.0"
 
     # The actions supported by this connector
     ACTION_ID_TEST_CONNECTIVITY = "test_connectivity"
     ACTION_ID_DETONATE_FILE = "detonate_file"
     ACTION_ID_DETONATE_FILE_AND_GET_REPORT = "detonate_file_and_get_report"
     ACTION_ID_GET_REPORT = "get_report"
+    ACTION_ID_GET_REPORT_BY_ID = "get_report_by_id"
+    ACTION_ID_GET_TASK_LIST = "get_task_list"
+    ACTION_ID_DELETE_PROCESSING_TASK = "delete_processing_task"
+    ACTION_ID_DELETE_PROCESSING_TASKS = "delete_processing_tasks"
+    ACTION_ID_GET_YARA_ID = "get_yara_id"
 
     def __init__(self):
         # Call the BaseConnectors init first
@@ -71,6 +76,11 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
             self.ACTION_ID_DETONATE_FILE: self._handle_detonate_file,
             self.ACTION_ID_DETONATE_FILE_AND_GET_REPORT: self._handle_detonate_file_and_get_report,
             self.ACTION_ID_GET_REPORT: self._handle_get_report,
+            self.ACTION_ID_GET_REPORT_BY_ID: self._handle_get_report_by_id,
+            self.ACTION_ID_GET_TASK_LIST: self._handle_get_task_list,
+            self.ACTION_ID_DELETE_PROCESSING_TASK: self._handle_delete_processing_task,
+            self.ACTION_ID_DELETE_PROCESSING_TASKS: self._handle_delete_processing_tasks,
+            self.ACTION_ID_GET_YARA_ID: self._handle_get_yara_id,
         }
 
         self._state = None
@@ -144,7 +154,12 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         if not file:
             raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
 
-        response = self.tiscale.upload_sample_from_path(file_path=file["path"])
+        response = self.tiscale.upload_sample_from_path(
+            file_path=file["path"],
+            custom_token=param.get("custom_token"),
+            user_data=param.get("user_data"),
+            custom_data=param.get("custom_data"),
+        )
 
         print(response.json())
 
@@ -157,10 +172,19 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
         response = self.tiscale.get_results(task_url=param.get("task_url"), full_report=param.get("full_report", False))
 
-        print(response.json())
-
         self.debug_print("Executed", self.get_action_identifier())
 
+        action_result.add_data(response.json())
+
+    def _handle_get_report_by_id(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        response = self.tiscale.get_processing_task_info(
+            task_id=param.get("task_id"),
+            full=param.get("full", True),
+            v13=param.get("v13", False),
+            view=param.get("view"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
         action_result.add_data(response.json())
 
     def _handle_test_connectivity(self, action_result, param):
@@ -168,7 +192,37 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
         self.tiscale.test_connection()
 
+        self.debug_print("Executed", self.get_action_identifier())
         self.save_progress("Test Connectivity Passed")
+
+    def _handle_get_task_list(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        response = self.tiscale.list_processing_tasks(
+            age=param.get("age"),
+            custom_token=param.get("custom_token"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
+        action_result.add_data(response.json())
+
+    def _handle_delete_processing_task(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        self.tiscale.delete_processing_task(
+            task_id=param.get("task_id"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
+
+    def _handle_delete_processing_tasks(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        self.tiscale.delete_multiple_tasks(
+            age=param.get("age"),
+        )
+        self.debug_print("Executed", self.get_action_identifier())
+
+    def _handle_get_yara_id(self, action_result, param):
+        self.debug_print("Action handler", self.get_action_identifier())
+        response = self.tiscale.get_yara_id()
+        action_result.add_data(response.json())
+        self.debug_print("Executed", self.get_action_identifier())
 
 
 def main():
