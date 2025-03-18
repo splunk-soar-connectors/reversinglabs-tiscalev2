@@ -21,7 +21,7 @@
             "name": "MislavReversingLabs"
         }
     ],
-    "license": "Copyright (c) ReversingLabs, 2023",
+    "license": "Copyright (c) ReversingLabs, 2023-2025",
     "app_version": "1.1.0",
     "utctime_updated": "2023-04-13T12:48:58.213954Z",
     "package_name": "phantom_reversinglabs_tiscalev2",
@@ -248,7 +248,9 @@
                     "order": 0,
                     "required": true,
                     "primary": true,
-                    "contains": ["task id"]
+                    "contains": [
+                        "task id"
+                    ]
                 },
                 "full": {
                     "description": "Specify if the full (true), or summary (false) report should be returned",
@@ -277,7 +279,9 @@
                     "data_type": "numeric",
                     "column_name": "Task ID",
                     "column_order": 0,
-                    "contains": ["task id"]
+                    "contains": [
+                        "task id"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.full",
@@ -350,7 +354,9 @@
                     "data_type": "string",
                     "required": true,
                     "primary": true,
-                    "contains": ["vault id"],
+                    "contains": [
+                        "vault id"
+                    ],
                     "order": 0
                 },
                 "custom_token": {
@@ -378,7 +384,9 @@
                     "data_path": "action_result.parameter.vault_id",
                     "data_type": "string",
                     "column_name": "Vault ID",
-                    "contains": ["vault id"],
+                    "contains": [
+                        "vault id"
+                    ],
                     "column_order": 0
                 },
                 {
@@ -453,7 +461,9 @@
                     "order": 0,
                     "required": false,
                     "primary": false,
-                    "contains": ["task age"]
+                    "contains": [
+                        "task age"
+                    ]
                 },
                 "custom_token": {
                     "description": "Custom string to filter processing tasks, if there are any files that were uploaded with that custom string in the X-TiScale-Token header",
@@ -468,7 +478,9 @@
                     "data_path": "action_result.parameter.age",
                     "data_type": "numeric",
                     "column_name": "age",
-                    "contains": ["task age"],
+                    "contains": [
+                        "task age"
+                    ],
                     "column_order": 0
                 },
                 {
@@ -531,7 +543,9 @@
                     "order": 0,
                     "required": true,
                     "primary": true,
-                    "contains": ["task id"]
+                    "contains": [
+                        "task id"
+                    ]
                 }
             },
             "output": [
@@ -540,7 +554,9 @@
                     "data_type": "numeric",
                     "column_name": "task_id",
                     "column_order": 0,
-                    "contains": ["task id"]
+                    "contains": [
+                        "task id"
+                    ]
                 },
                 {
                     "data_path": "action_result.status",
@@ -592,7 +608,9 @@
                     "order": 0,
                     "required": true,
                     "primary": true,
-                    "contains": ["task age"]
+                    "contains": [
+                        "task age"
+                    ]
                 }
             },
             "output": [
@@ -600,7 +618,9 @@
                     "data_path": "action_result.parameter.age",
                     "data_type": "numeric",
                     "column_name": "age",
-                    "contains": ["task age"],
+                    "contains": [
+                        "task age"
+                    ],
                     "column_order": 0
                 },
                 {
