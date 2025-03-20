@@ -1,6 +1,6 @@
 # File: reversinglabs_tiscalev2_connector.py
 #
-# Copyright (c) ReversingLabs, 2023
+# Copyright (c) ReversingLabs, 2023-2025
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ from phantom import vault
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from ReversingLabs.SDK.tiscale import TitaniumScale
+
 
 # Our helper lib reversinglabs-sdk-py3 internally utilizes pypi requests (with named parameters) which is shadowed by Phantom
 # requests (which has renamed parameters (url>>uri), hence this workarounds
@@ -69,7 +70,7 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
     def __init__(self):
         # Call the BaseConnectors init first
-        super(ReversinglabsTitaniumScaleConnector, self).__init__()
+        super().__init__()
 
         self.ACTIONS = {
             self.ACTION_ID_TEST_CONNECTIVITY: self._handle_test_connectivity,
@@ -97,9 +98,9 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         self.wait_time = config.get("wait_time", 2)
         self.retries = config.get("retries", 10)
 
-        self.tiscale = TitaniumScale(host=self.tiscale_url, token=self.tiscale_token,
-                                     wait_time_seconds=self.wait_time, retries=self.retries,
-                                     user_agent=self.USER_AGENT)
+        self.tiscale = TitaniumScale(
+            host=self.tiscale_url, token=self.tiscale_token, wait_time_seconds=self.wait_time, retries=self.retries, user_agent=self.USER_AGENT
+        )
 
         return phantom.APP_SUCCESS
 
@@ -130,11 +131,11 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         file_vault_id = param["vault_id"]
         success, msg, files_array = vault.vault_info(container_id=self.get_container_id())
         if not success:
-            raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
+            raise Exception(f"Unable to get Vault item details. Error details: {msg}")
 
         file = next(filter(lambda x: x["vault_id"] == file_vault_id, files_array), None)
         if not file:
-            raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
+            raise Exception(f"Unable to get Vault item details. Error details: {msg}")
 
         response = self.tiscale.upload_sample_and_get_results(file_path=file["path"], full_report=param.get("full_report", False))
 
@@ -148,11 +149,11 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
         file_vault_id = param["vault_id"]
         success, msg, files_array = vault.vault_info(container_id=self.get_container_id())
         if not success:
-            raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
+            raise Exception(f"Unable to get Vault item details. Error details: {msg}")
 
         file = next(filter(lambda x: x["vault_id"] == file_vault_id, files_array), None)
         if not file:
-            raise Exception('Unable to get Vault item details. Error details: {0}'.format(msg))
+            raise Exception(f"Unable to get Vault item details. Error details: {msg}")
 
         response = self.tiscale.upload_sample_from_path(
             file_path=file["path"],
@@ -242,5 +243,5 @@ def main():
     sys.exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
