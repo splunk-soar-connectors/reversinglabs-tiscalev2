@@ -22,8 +22,8 @@
         }
     ],
     "license": "Copyright (c) ReversingLabs, 2023-2025",
-    "app_version": "1.1.0",
-    "utctime_updated": "2023-04-13T12:48:58.213954Z",
+    "app_version": "1.1.1",
+    "utctime_updated": "2025-04-11T19:07:07.096391Z",
     "package_name": "phantom_reversinglabs_tiscalev2",
     "main_module": "reversinglabs_tiscalev2_connector.py",
     "min_phantom_version": "6.2.1",

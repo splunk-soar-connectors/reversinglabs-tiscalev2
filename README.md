@@ -1,7 +1,7 @@
 # ReversingLabs TitaniumScale v2
 
 Publisher: ReversingLabs \
-Connector Version: 1.1.0 \
+Connector Version: 1.1.1 \
 Product Vendor: ReversingLabs \
 Product Name: TitaniumScale \
 Minimum Product Version: 6.2.1
