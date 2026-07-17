@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Chore: update connector development hooks.
+* Restrict report task URLs to HTTPS task endpoints on the configured TitaniumScale appliance.
