@@ -1,6 +1,6 @@
 # File: reversinglabs_tiscalev2_connector.py
 #
-# Copyright (c) ReversingLabs, 2023-2025
+# Copyright (c) ReversingLabs, 2023-2026
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 
 # Python 3 Compatibility imports
 import json
+from urllib.parse import unquote, urlsplit
 
 # Phantom App imports
 import phantom.app as phantom
@@ -168,10 +169,52 @@ class ReversinglabsTitaniumScaleConnector(BaseConnector):
 
         action_result.add_data(response.json())
 
+    @staticmethod
+    def _validate_task_url(task_url, configured_url):
+        if not isinstance(task_url, str):
+            raise ValueError("task_url must be a string")
+
+        try:
+            task = urlsplit(task_url)
+            configured = urlsplit(configured_url)
+            task_port = task.port or 443
+            configured_port = configured.port or 443
+        except ValueError as error:
+            raise ValueError("task_url must be a valid TitaniumScale task URL") from error
+
+        task_host = (task.hostname or "").rstrip(".").casefold()
+        configured_host = (configured.hostname or "").rstrip(".").casefold()
+        if (
+            task.scheme.casefold() != "https"
+            or configured.scheme.casefold() != "https"
+            or not task_host
+            or (task_host, task_port) != (configured_host, configured_port)
+            or task.username is not None
+            or task.password is not None
+            or task.query
+            or task.fragment
+        ):
+            raise ValueError("task_url must use HTTPS on the configured TitaniumScale origin")
+
+        expected_path_prefix = f"{configured.path.rstrip('/')}/api/tiscale/v1/task/"
+        task_identifier = task.path.removeprefix(expected_path_prefix)
+        decoded_identifier = unquote(task_identifier)
+        if (
+            not task.path.startswith(expected_path_prefix)
+            or not decoded_identifier
+            or "/" in decoded_identifier
+            or "\\" in decoded_identifier
+            or decoded_identifier in {".", ".."}
+        ):
+            raise ValueError("task_url must identify a task on the configured TitaniumScale appliance")
+
+        return task_url
+
     def _handle_get_report(self, action_result, param):
         self.debug_print("Action handler", self.get_action_identifier())
 
-        response = self.tiscale.get_results(task_url=param.get("task_url"), full_report=param.get("full_report", False))
+        task_url = self._validate_task_url(param.get("task_url"), self.tiscale_url)
+        response = self.tiscale.get_results(task_url=task_url, full_report=param.get("full_report", False))
 
         self.debug_print("Executed", self.get_action_identifier())
 

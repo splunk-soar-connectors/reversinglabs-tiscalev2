@@ -21,7 +21,7 @@
             "name": "MislavReversingLabs"
         }
     ],
-    "license": "Copyright (c) ReversingLabs, 2023-2025",
+    "license": "Copyright (c) ReversingLabs, 2023-2026",
     "app_version": "1.1.1",
     "utctime_updated": "2025-04-11T19:07:07.096391Z",
     "package_name": "phantom_reversinglabs_tiscalev2",
@@ -712,6 +712,14 @@
         }
     ],
     "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "reversinglabs_sdk_py3",
+                "input_file": "wheels/py3/reversinglabs_sdk_py3-2.5.6-py3-none-any.whl"
+            }
+        ]
+    },
+    "pip313_dependencies": {
         "wheel": [
             {
                 "module": "reversinglabs_sdk_py3",
